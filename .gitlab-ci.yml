@@ -18,7 +18,7 @@ build-job:       # This job runs in the build stage, which runs first.
     - docker build --pull -t "$CI_REGISTRY_IMAGE" .
     - echo "Build complete."
     - echo "Pushing image to dockerhub repository..."
-    - docker push "$CI_REGISTRY_IMAGE"
+    - docker image push "$CI_REGISTRY_IMAGE"
     - echo "Image  successfully pushed ." 
 
   only:
