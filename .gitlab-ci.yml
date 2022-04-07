@@ -11,7 +11,7 @@ stages:          # List of stages for jobs, and their order of execution
   - build
   - test
 
-fetching-github-changes   # This job runs in the fetch stage. it indicates that changes from remote repository were detected
+fetching-github-changes:  # This job runs in the fetch stage. it indicates that changes from remote repository were detected
   stage: fetch
   script:    
     - echo "Github changes fecthing"
