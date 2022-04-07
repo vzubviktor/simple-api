@@ -7,12 +7,13 @@ before_script:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 stages:          # List of stages for jobs, and their order of execution
-  - fecth
+  - fetch
   - build
   - test
 
-fetching-github-changes   # This job runs in the fecth stage. it indicates that changes from remote repository were detected
-  stage: fecth    
+fetching-github-changes   # This job runs in the fetch stage. it indicates that changes from remote repository were detected
+  stage: fetch
+  script:    
     - echo "Github changes fecthing"
     - echo "Changes saved"
 
@@ -32,6 +33,5 @@ build-job:       # This job runs in the docker build stage and pushing image to 
 deploy-job:      # This job runs in the test stage.
   stage: test  # It indicates tests and results after the build .
   script:
-   
     - echo "finished"
     
