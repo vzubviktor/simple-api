@@ -52,15 +52,15 @@ class DataTable(db.Model):
 db.create_all()
 
 
-def createRecord(data):
-    try:
-        new_record = DataTable(
-            request = data,
-            created_at = dt.now()
-        )
-        return new_record
-    except:
-        pass
+# def createRecord(data):
+#     try:
+#         new_record = DataTable(
+#             request = data,
+#             created_at = dt.now()
+#         )
+#         return new_record
+#     except:
+#         pass
     
 
 
@@ -80,13 +80,8 @@ def process_json():
         # db.session.add(new_user)
         return data
     except:
-        pass
-    try:
-        data = request.data
-        print('2nd try')
-        return  data
-    except:
         return json.dumps({'message': 'invalid request'})
+    
 
 
 if __name__ == '__main__':
