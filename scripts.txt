@@ -1,8 +1,0 @@
-Scripts:
-export FLASK_APP=app
-flask shell
-from app import db, Student
-db.create_all()
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
