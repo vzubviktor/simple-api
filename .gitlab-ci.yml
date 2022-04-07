@@ -15,8 +15,7 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - echo "Building docker image the code..."
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-    - docker tag "$CI_REGISTRY_IMAGE":latest
+    - docker build  -t "$CI_REGISTRY_IMAGE" .
     - echo "Build complete."
   only:
     - main
@@ -37,5 +36,5 @@ deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   script:
     - echo "Pushing image to dockerhub repository..."
-    - docker push "$CI_REGISTRY_IMAGE"
+    - docker push vzubviktor/simple-api:latest
     - echo "Image  successfully pushed."
