@@ -15,10 +15,10 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
     - echo "Building docker image the code..."
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker build -t vzubviktor/simple-api:latest .
     - echo "Build complete."
     - echo "Pushing image to dockerhub repository..."
-    - docker push "$CI_REGISTRY_IMAGE"
+    - docker image push vzubviktor/simple-api:latest
     - echo "Image  successfully pushed ." 
 
   only:
