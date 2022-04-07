@@ -37,4 +37,4 @@ deploy-job:      # This job runs in the deploy stage.
   script:
     - echo "Pushing image to dockerhub repository..."
     - docker push vzubviktor/simple-api:latest
-    - echo "Image  successfully pushed."
+    - echo "Image  successfully pushed ." 
