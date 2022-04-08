@@ -1,7 +1,7 @@
 import os
 import time
 from datetime import datetime as dt
-from flask import request, Flask, make_response
+from flask import request, Flask, make_response, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 import json
@@ -16,7 +16,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 # adding configuration for using a sqlite database
 app.config['SQLALCHEMY_DATABASE_URI'] =\
         'sqlite:///' + os.path.join(basedir, 'database.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Creating an SQLAlchemy instance
 db = SQLAlchemy(app)
@@ -24,7 +24,7 @@ db = SQLAlchemy(app)
 # # Settings for migrations
 migrate = Migrate(app, db)
 
-app = Flask(__name__)
+
 
 
 class DataTable(db.Model):
@@ -38,32 +38,21 @@ class DataTable(db.Model):
         unique=False, 
         nullable=False
     )
-    created_at = created = db.Column(
-        db.DateTime,
-        index=False,
+    created_at = db.Column(
+        db.Integer,
+        # index=False,
         unique=False,
-        nullable=False
+        nullable=True
     )
  
     # repr method represents how one object of this datatable
     # will look like
-    def __repr__(self):
-        return f"DataTable : {self.request}"
+    def __init__(self, request, created_at):
+        self.request  = request
+        self.created_at = created_at
+        
 
 db.create_all()
-
-
-# def createRecord(data):
-#     try:
-#         new_record = DataTable(
-#             request = data,
-#             created_at = dt.now()
-#         )
-#         return new_record
-#     except:
-#         pass
-    
-
 
 
 
@@ -79,11 +68,23 @@ def process_json():
         data = json.loads(request.data)
         timestamp = dt.now()
         timestamp = time.mktime(timestamp.timetuple())
-        # db.session.add(new_user)
-        return json.dumps({'request': data, 'created' : str(timestamp)})
-        # return data
+        record = DataTable(request =str(data), created_at =  str(timestamp) )
+        db.session.add(record)
+        db.session.commit()
+        
+        return json.dumps({'request': data, 'created_at' : timestamp})
     except:
         return json.dumps({'message': 'invalid request'})
+
+@app.route('/partium/test')
+def view_db():
+    try:
+      
+        return render_template('test.html', data = DataTable.query.all())
+    except:
+        return json.dumps({'message': 'invalid request'})
+
+
     
 
 
