@@ -40,25 +40,17 @@ class DataTable(db.Model):
     )
     created_at = db.Column(
         db.Integer,
-        # index=False,
         unique=False,
         nullable=True
     )
  
-    # repr method represents how one object of this datatable
-    # will look like
+  
     def __init__(self, request, created_at):
         self.request  = request
         self.created_at = created_at
         
 
 db.create_all()
-
-
-
-
-
-
 
 @app.route('/')
 def index():
