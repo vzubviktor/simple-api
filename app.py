@@ -56,6 +56,10 @@ db.create_all()
 
 
 
+
+
+
+
 @app.route('/')
 def index():
     return 'Test project for partium'
@@ -68,7 +72,7 @@ def process_json():
         data = json.loads(request.data)
         timestamp = dt.now()
         timestamp = time.mktime(timestamp.timetuple())
-        record = DataTable(request =str(data), created_at =  str(timestamp) )
+        record = DataTable(request =str(data), created_at =  timestamp )
         db.session.add(record)
         db.session.commit()
         
@@ -79,7 +83,7 @@ def process_json():
 @app.route('/partium/test')
 def view_db():
     try:
-      
+              
         return render_template('test.html', data = DataTable.query.all())
     except:
         return json.dumps({'message': 'invalid request'})
