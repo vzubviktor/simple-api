@@ -1,4 +1,5 @@
 import os
+import time
 from datetime import datetime as dt
 from flask import request, Flask, make_response
 from flask_sqlalchemy import SQLAlchemy
@@ -68,17 +69,19 @@ db.create_all()
 
 @app.route('/')
 def index():
-    return 'Flask running'
+    return 'Test project for partium'
 
 
 # routing config
-@app.route('/test', methods=['POST'])
+@app.route('/partium/echoservice', methods=['POST'])
 def process_json():
     try:
         data = json.loads(request.data)
-        print('1st try')
+        timestamp = dt.now()
+        timestamp = time.mktime(timestamp.timetuple())
         # db.session.add(new_user)
-        return data
+        return json.dumps({'request': data, 'created' : str(timestamp)})
+        # return data
     except:
         return json.dumps({'message': 'invalid request'})
     
