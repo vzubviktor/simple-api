@@ -54,7 +54,7 @@ db.create_all()
 
 @app.route('/')
 def index():
-    return 'Test project for partium'
+    return 'Test project for partium iss runnig'
 
 
 # routing config
